@@ -1,19 +1,11 @@
 {
-  "name": "nodejs",
+  "name": "js",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "test.js",
   "scripts": {
-    "start": "node index",
-    "dev": "nodemon index"
+    "start": "node global.js"
   },
   "author": "",
   "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "date-fns": "^4.1.0",
-    "uuid": "^11.1.0"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.10"
-  }
+  "description": ""
 }
