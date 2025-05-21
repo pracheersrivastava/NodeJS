@@ -1,29 +1,16 @@
-//(1)Node JS runs on server, not on browser
-//(2) Console is the terminal window.
-console.log("Hello World!") 
-//(3) global object instead of window object
-// console.log(global)
-//(4) Has common core modules that we will explore
-//(5) CommonJS modules instead of ES6 modules.
-const os = require('os');
-const path = require('path');
-const { add, subtract, multiply, divide } = require('./math')
+const http = require('http');
+const server = http.createServer((req, res) => {
+    console.log(req.url, req.method);
 
-console.log(add(2, 3));
-console.log(subtract(1, 3));
-console.log(multiply(2, 3));
-console.log(divide(2, 4));
+    // set header content type
+    res.setHeader('Content-Type', 'text/html');
+    res.write('<head><link rel="stylesheet" href="#"></head>');
+    res.write('<h1>Hello, World!</h1>');
+    res.write('<h2>Hello There!</h2>');
+    res.end();
+});
 
-// console.log(os.type())
-// console.log(os.version())
-// console.log(os.homedir())
-
-
-// console.log(__dirname)
-// console.log(__filename)
-
-// console.log(path.dirname(__filename))
-// console.log(path.basename(__filename))
-// console.log(path.extname(__filename))
-// console.log(path.parse(__filename))
+server.listen(3000, 'localhost', () => {
+    console.log('listening for requests on port 3000');
+})
 
