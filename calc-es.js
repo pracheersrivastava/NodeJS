@@ -2,6 +2,12 @@ import * as readline from 'readline';
 import { stdin as input, stdout as output} from 'process';
 
 const rl = readline.createInterface({input, output});
+
+function question(query){
+    return new Promise(resolve => {
+        rl.question(query, resolve);
+    });
+}
 // function prompt() {
 //     rl.question('Enter a siimple equation: ', (input) => {
 //         if(input === 'exit') {
@@ -21,11 +27,6 @@ const rl = readline.createInterface({input, output});
 // prompt();
 
 
-function question(query){
-    return new Promise(resolve => {
-        rl.question(query, resolve);
-    });
-}
 
 let answer = await question('Enter a simple equation: ');
 while(answer !== 'exit') {
