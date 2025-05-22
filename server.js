@@ -1,67 +1,29 @@
-    const http = require('http');
-    const fs = require('fs');
-    const _ = require('lodash');
+//(1)Node JS runs on server, not on browser
+//(2) Console is the terminal window.
+console.log("Hello World!") 
+//(3) global object instead of window object
+// console.log(global)
+//(4) Has common core modules that we will explore
+//(5) CommonJS modules instead of ES6 modules.
+const os = require('os');
+const path = require('path');
+const { add, subtract, multiply, divide } = require('./math')
 
-    const server = http.createServer((req, res) => {
-        // console.log(req.url, req.method);
+console.log(add(2, 3));
+console.log(subtract(1, 3));
+console.log(multiply(2, 3));
+console.log(divide(2, 4));
 
-        //lodash
+// console.log(os.type())
+// console.log(os.version())
+// console.log(os.homedir())
 
-        const num = _.random(0, 20);    
-        console.log(num);
 
-        const greet = _.once(() => {
-            console.log('Hello');
-        });
-        greet();
-        // greet(); //not registered
+// console.log(__dirname)
+// console.log(__filename)
 
-        let path = './views/';
-        switch (req.url) {
-            case '/':
-            case '/home':
-            case '/index':
-                path += 'index.html';
-                res.statusCode = 200;
-                break;
-            case '/about':
-                path += 'about.html';
-                res.statusCode = 200;
-                break;
-                //Redirect
-            case '/about-me':
-                res.statusCode = 301;
-                res.setHeader('Location', '/about');
-                res.end();           
-                return;
-            default:
-                path += '404.html';
-                res.statusCode = 404;
-                break;
-
-        }
-
-        // set header content type
-        res.setHeader('Content-Type', 'text/html');
-        // res.write('<head><link rel="stylesheet" href="#"></head>');
-        // res.write('<h1>Hello, World!</h1>');
-        // res.write('<h2>Hello There!</h2>');
-        // res.end();
-
-        //send an html file
-        fs.readFile(path, (err, data) => {
-            if (err) {
-                console.log(err);
-                res.end();
-            }
-            else {
-                // res.write(data);
-                res.end(data);
-            }
-        });
-    });
-
-    server.listen(3000, 'localhost', () => {
-        console.log('listening for requests on port 3000');
-    })
+// console.log(path.dirname(__filename))
+// console.log(path.basename(__filename))
+// console.log(path.extname(__filename))
+// console.log(path.parse(__filename))
 
