@@ -1,7 +1,12 @@
 import { getLinks, saveLinks } from './feed-manager.js';
 import { question, close } from './rl.js';
+// import https from 'https'
+import axios from 'axios';
+import Parser from 'rss-parser';    
+
 const feeds = await getLinks();
-let input = await question('Enter a command (list, add, del, read, quit): ');  
+let input = await question('Enter a command (list, add, del, read, quit): ');
+const parser = new Parser();  
 
 while(input !== 'quit') {
 
@@ -39,9 +44,38 @@ while(input !== 'quit') {
     }
     }
     //read index
+    // if (cmd === 'read') {
+    //    https.get('https://www.reddit.com/r/node.rss', (response) => {
+    //     let content = '';
+    //     response.on('data', (chunk) => {
+    //         content += chunk;
+    //     });
+
+    //     response.on('end', () => {
+    //         console.log(content);
+    //     });
+    //    })
+    // }
+    if (cmd === 'read') {
+        if (cmdParts.length < 2) {
+            console.log('Please include the index of the URL to read');
+        } else {
+            let index = parseInt(cmdParts[1], 10);
+
+            if (index > -1 && index < feeds.length) {
+                let {data} = await axios.get('https://www.reddit.com/r/node.rss')
+                let feed = await parser.parseString(data);
+                feed.items.forEach((item) => {
+                console.log(item.title);
+                });
+            } else {
+                console.log('Index is out of range');
+            }
+        }
+    }
+
     input = await question('Enter a command (list, add, del, read, quit): ');
 }
 
-feeds.push('https://www.tutsplus.com');
 await saveLinks(feeds);
 close();
